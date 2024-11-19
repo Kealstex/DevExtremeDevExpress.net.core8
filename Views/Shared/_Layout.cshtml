@@ -1,0 +1,93 @@
+@using Microsoft.AspNetCore.Mvc.Razor.Internal
+@using Microsoft.AspNetCore.Mvc.TagHelpers
+@functions {
+    [RazorInject]
+#if NETCOREAPP3_0_OR_GREATER
+    IWebHostEnvironment Env { get; set; }
+#else
+    IWebHostEnvironment Env { get; set; }
+#endif
+
+    bool ContentExists(string url) {
+        return File.Exists(url.Replace("~", Env.ContentRootPath + "/wwwroot"));
+    }
+}
+<!DOCTYPE html>
+
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>DevExtremeAspNetCoreApp</title>
+    
+    <link href="~/favicon.ico" rel="shortcut icon" type="image/x-icon"/>
+
+    <link href="css/site.min.css" rel="stylesheet" />
+    <link href="css/ace/ace.bundle.min.css" rel="stylesheet" />
+    <script src="js/devextreme/jquery.min.js" asp-append-version="true"></script>
+    <script src="js/knockout-latest.js" asp-append-version="true"></script>
+    <script src="js/devextreme-bundle.min.js" asp-append-version="true"></script>
+    <script src="js/dashboard-bundle.min.js" asp-append-version="true"></script>
+    <script type="text/javascript">
+        function onBeforeRender(dashboardControl) {
+            dashboardControl.registerExtension(new DevExpress.Dashboard.DashboardPanelExtension(dashboardControl));
+            dashboardControl.registerExtension(new SimpleTableCustomItem(dashboardControl));
+            dashboardControl.registerExtension(new PolarChartCustomItem(dashboardControl));
+            dashboardControl.registerExtension(new ParameterCustomItem(dashboardControl));            
+            dashboardControl.registerExtension(new OnlineMapCustomItem(dashboardControl));
+            dashboardControl.registerExtension(new WebPageCustomItem(dashboardControl));
+            dashboardControl.registerExtension(new GanttCustomItem(dashboardControl));
+            dashboardControl.registerExtension(new TreeViewCustomItem(dashboardControl));
+            dashboardControl.registerExtension(new FunnelD3CustomItem(dashboardControl));
+        }
+    </script>
+    @* Uncomment to provide geo-data for the VectorMap control *@
+    @* Docs: https://js.devexpress.com/DevExtreme/Guide/Widgets/VectorMap/Providing_Data/#Data_for_Areas *@
+    @*<script src="~/js/devextreme/vectormap-data/world.js"></script>*@
+</head>
+
+<body style="padding-top: 3.5rem;">
+
+<nav class="navbar navbar-dark bg-dark fixed-top navbar-expand-md">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="/">DevExtremeAspNetCoreApp2</a>
+
+        <button type="button" class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div id="navbar" class="collapse navbar-collapse">
+            <ul class="navbar-nav me-auto">
+                <li class="nav-item">
+                    <a href="#" class="nav-link active">Home</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#about" class="nav-link">About</a>
+                </li>
+                <li class="nav-item">
+                    <a href="#contact" class="nav-link">Contact</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+</nav>
+
+<main class="container" style="margin-top: 1.5rem;">
+    @RenderBody()
+</main>
+
+<script src="js/OnlineMapItem.js"></script>
+<script src="js/PolarChartItem.js"></script>
+<script src="js/WebPageItem.js"></script>
+<script src="js/SimpleTableItem.js"></script>
+<script src="js/GanttItem.js"></script>
+<script src="js/ParameterItem.js"></script>
+<script src="js/HierarchicalTreeViewItem.js"></script>
+<script src="js/FunnelD3.js"></script>
+</body>
+
+</html>
