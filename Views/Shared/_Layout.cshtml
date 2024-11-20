@@ -31,6 +31,15 @@
     <script src="js/devextreme-bundle.min.js" asp-append-version="true"></script>
     <script src="js/dashboard-bundle.min.js" asp-append-version="true"></script>
     <script type="text/javascript">
+
+        function onDashboardInitialized() {  
+        //Uncomment this method to change the parameters  
+        //    var parametersExtension = WebDashboard.findExtension("dashboardParameterDialog");
+        //    const parameters = parametersExtension.getParameters();
+        //    const param1 = parameters.getParameterByName("name1");
+        //    param1.setValue("value");
+        }
+
         function onBeforeRender(dashboardControl) {
             dashboardControl.registerExtension(new DevExpress.Dashboard.DashboardPanelExtension(dashboardControl));
             dashboardControl.registerExtension(new SimpleTableCustomItem(dashboardControl));
